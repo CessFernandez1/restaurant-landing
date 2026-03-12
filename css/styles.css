@@ -141,6 +141,16 @@ html, body {
         backdrop-filter 0.3s ease;
 }
 
+/* Logo y menú hamburguesa centrados verticalmente; logo izquierda, menú derecha */
+#navbar > div {
+    min-height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+}
+#navbar > div > div {
+    width: 100%;
+}
+
 /* Estado al hacer scroll: mismo glass, un poco más de profundidad y definición */
 #navbar.navbar-scrolled {
     background-color: rgba(0, 0, 0, 0.18) !important;
@@ -372,8 +382,12 @@ html, body {
 }
 
 /* ===== Utilidades ===== */
+/* Móvil: imagen de fondo cubre el 100% del hero (ancho y alto), sin banda */
 @media (max-width: 768px) {
     .hero-section {
         min-height: 100vh;
+        background-size: cover !important;
+        background-position: center center;
+        animation: none; /* evita que heroBackgroundZoom (100%/105%) quite el cover */
     }
 }

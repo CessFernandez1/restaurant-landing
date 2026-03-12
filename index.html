@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Restaurante moderno con cocina artesanal, ambiente elegante y experiencia gastronómica única. Descubre nuestro menú y reserva tu mesa.">
+    <meta property="og:title" content="Demo Restaurante | Experiencia gastronómica premium">
+    <meta property="og:description" content="Descubre nuestro menú, galería y reserva tu mesa en un restaurante con ambiente elegante y cocina artesanal.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="img/hero/restaurant.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Demo Restaurante">
+    <meta name="twitter:description" content="Experiencia gastronómica premium en un ambiente moderno y elegante.">
+    <meta name="twitter:image" content="img/hero/restaurant.jpg">
+    <title>Restaurant Demo | Sabores que enamoran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="antialiased text-gray-900 overflow-x-hidden">
+    <!-- Indicador de progreso de scroll -->
+    <div id="scroll-progress" class="scroll-progress-bar"></div>
+    <!-- Navbar oscuro semi-transparente -->
+    <header id="navbar" class="sticky top-0 z-50 backdrop-blur-lg border-b border-white/10 text-white shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-0">
+            <div class="flex items-center justify-between gap-4">
+                <!-- Logo (izquierda) -->
+                <a href="#inicio" class="flex items-center shrink-0">
+                    <img src="img/logo/logo.png" alt="Logo del restaurante" loading="lazy" class="h-14 w-auto object-contain block sm:h-[4.5rem] md:h-24">
+                </a>
+                <!-- Menú centro (desktop) -->
+                <nav class="hidden md:flex flex-1 justify-center" aria-label="Navegación principal">
+                    <ul class="flex items-center gap-6 lg:gap-8">
+                        <li><a href="#inicio" class="nav-link-dark text-white hover:text-amber-400 transition-colors py-2">Inicio</a></li>
+                        <li><a href="#menu" class="nav-link-dark text-white hover:text-amber-400 transition-colors py-2">Menú</a></li>
+                        <li><a href="#gallery" class="nav-link-dark text-white hover:text-amber-400 transition-colors py-2">Galería</a></li>
+                        <li><a href="#about" class="nav-link-dark text-white hover:text-amber-400 transition-colors py-2">Nosotros</a></li>
+                        <li><a href="#contacto" class="nav-link-dark text-white hover:text-amber-400 transition-colors py-2">Contacto</a></li>
+                    </ul>
+                </nav>
+                <!-- Derecha: botón Reservar (desktop) + hamburguesa (móvil) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="#contacto" class="hidden md:inline-flex items-center bg-amber-500 text-black px-5 py-2 rounded-lg font-semibold hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-black/20 transition-colors">
+                        Reservar Mesa
+                    </a>
+                    <button id="menu-button" type="button" class="md:hidden flex items-center justify-center p-2 rounded-lg text-white hover:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-transparent transition" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+                        <span id="menu-icon-hamburger" class="inline-flex" aria-hidden="true">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </span>
+                        <span id="menu-icon-close" class="hidden inline-flex" aria-hidden="true">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Backdrop: clic fuera cierra el menú (solo móvil). Transición suave. -->
+        <div id="mobile-menu-backdrop" class="fixed inset-0 z-30 md:hidden bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-out" aria-hidden="true"></div>
+        <!-- Menú móvil: glass, animación scale + translateY, enlaces con animación escalonada -->
+        <div id="mobile-menu" class="mobile-menu-dark md:hidden absolute top-full left-0 right-0 w-full z-40 px-4 py-4 opacity-0 pointer-events-none" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+            <nav class="flex flex-col gap-1" aria-label="Menú principal">
+                <ul class="flex flex-col gap-1">
+                    <li><a href="#inicio" class="mobile-nav-link">Inicio</a></li>
+                    <li><a href="#menu" class="mobile-nav-link">Menú</a></li>
+                    <li><a href="#gallery" class="mobile-nav-link">Galería</a></li>
+                    <li><a href="#about" class="mobile-nav-link">Nosotros</a></li>
+                    <li><a href="#contacto" class="mobile-nav-link">Contacto</a></li>
+                </ul>
+                <a href="#contacto" class="mobile-nav-cta mt-4 w-full text-center bg-amber-500 text-black px-5 py-3 rounded-lg font-semibold hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-black/40 transition">
+                    Reservar Mesa
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section relative min-h-screen flex items-center justify-center">
+        <div class="hero-overlay"></div>
+        <div class="hero-content relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-lg" data-aos="fade-up" data-aos-delay="80">
+                Sabores que enamoran
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl text-white mb-8 drop-shadow-lg" data-aos="fade-up" data-aos-delay="180">
+                Disfruta la mejor experiencia gastronómica
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="280">
+                <a href="#menu" class="btn-primary inline-flex items-center justify-center px-8 py-4 rounded-lg font-semibold text-lg">
+                    Ver Menú
+                </a>
+                <a href="https://wa.me/525567574525?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20mesa%20en%20su%20restaurante." target="_blank" rel="noopener noreferrer" class="btn-whatsapp inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-semibold text-lg">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <!-- About Section -->
+        <section id="about" class="py-16 sm:py-20 lg:py-24 bg-stone-50" data-aos="fade-up">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+                    <!-- Image -->
+                    <div class="w-full lg:w-1/2 order-2 lg:order-1">
+                        <div class="relative overflow-hidden rounded-2xl shadow-xl aspect-[4/3] lg:aspect-[3/2]">
+                            <img
+                                src="img/about/restaurant.jpg"
+                                alt="Interior del restaurante Demo Restaurante"
+                                loading="lazy"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                            >
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div class="w-full lg:w-1/2 order-1 lg:order-2">
+                        <p class="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-3">Nuestra historia</p>
+                        <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-6 leading-tight">Sobre Nuestro Restaurante</h2>
+                        <div class="space-y-4 text-gray-600 leading-relaxed">
+                            <p>En Demo Restaurante creemos que la comida es una experiencia que se comparte. Nuestro equipo de chefs combina ingredientes frescos con técnicas modernas para crear platillos que sorprenden a cada cliente.</p>
+                            <p>Desde nuestros cortes premium hasta nuestras pizzas artesanales, cada receta está pensada para ofrecer sabores auténticos y una experiencia gastronómica inolvidable.</p>
+                            <p>Nuestro espacio está diseñado para que disfrutes momentos especiales con familia y amigos en un ambiente cálido y acogedor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Menu Section -->
+        <section id="menu" class="py-16 sm:py-20 lg:py-24 bg-white">
+            <div class="max-w-6xl mx-auto px-6">
+                <header class="section-header max-w-2xl mx-auto mb-12 sm:mb-16">
+                    <p class="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2" data-aos="fade-up">Nuestra carta</p>
+                    <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3" data-aos="fade-up" data-aos-delay="100">Platillos Destacados</h2>
+                    <p class="text-gray-600 text-lg" data-aos="fade-up" data-aos-delay="200">Algunos de los favoritos de nuestros clientes</p>
+                </header>
+                <!-- Tabs de categorías del menú -->
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-10" data-aos="fade-up" data-aos-delay="260">
+                    <button type="button" class="menu-tab menu-tab-active" data-menu-tab="todos">Todos</button>
+                    <button type="button" class="menu-tab" data-menu-tab="platos">Platos fuertes</button>
+                    <button type="button" class="menu-tab" data-menu-tab="entradas">Entradas</button>
+                    <button type="button" class="menu-tab" data-menu-tab="postres">Postres</button>
+                    <button type="button" class="menu-tab" data-menu-tab="bebidas">Bebidas</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Card 1 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="platos" data-aos="zoom-in" data-aos-delay="0">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/burger.jpg" alt="Hamburguesa Artesanal" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Hamburguesa Artesanal</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$180</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Carne 100% de res, queso cheddar derretido, lechuga fresca, tomate y nuestra salsa especial en pan brioche tostado.</p>
+                        </div>
+                    </article>
+                    <!-- Card 2 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="platos" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/pizza.jpg" alt="Pizza Italiana" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Pizza Italiana</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$220</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Masa artesanal horneada a la piedra con mozzarella fresca, salsa de tomate natural y albahaca.</p>
+                        </div>
+                    </article>
+                    <!-- Card 3 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="platos" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/steak.jpg" alt="Corte Premium" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Corte Premium</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$350</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Corte de res a la parrilla acompañado de papas rústicas y mantequilla de hierbas.</p>
+                        </div>
+                    </article>
+                    <!-- Card 4 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="entradas" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/tacos.jpg" alt="Tacos Gourmet" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Tacos Gourmet</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$160</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Tres tacos con carne marinada, cebolla, cilantro y salsa especial de la casa.</p>
+                        </div>
+                    </article>
+                    <!-- Card 5 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="platos" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/pasta.jpg" alt="Pasta Italiana" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Pasta Italiana</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$200</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Pasta fresca con salsa de tomate casera, parmesano y aceite de oliva extra virgen.</p>
+                        </div>
+                    </article>
+                    <!-- Card 6 -->
+                    <article class="menu-card card-menu group menu-item" data-menu-category="postres" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="img/menu/dessert.jpg" alt="Volcán de Chocolate" loading="lazy" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        </div>
+                        <div class="p-5 sm:p-6">
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="font-bold text-lg text-gray-900">Volcán de Chocolate</h3>
+                                <span class="font-semibold text-amber-600 whitespace-nowrap">$140</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed">Pastel de chocolate caliente con centro líquido acompañado de helado de vainilla.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section - Carrusel Coverflow -->
+        <section id="gallery" class="py-20 bg-stone-100" data-aos="fade-up">
+            <div class="max-w-6xl mx-auto px-6">
+                <header class="section-header">
+                    <p class="text-amber-500 uppercase tracking-widest text-sm mb-3">Nuestra experiencia</p>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4">Galería del Restaurante</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Descubre el ambiente, los sabores y los momentos que hacen único nuestro restaurante.</p>
+                </header>
+                <div class="gallery-coverflow relative pb-14">
+                    <div class="swiper gallery-swiper overflow-hidden rounded-2xl">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed.jpg" alt="Interior del restaurante" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed2.jpg" alt="Platillo gourmet" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed3.jpg" alt="Ambiente del restaurante" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed4.jpg" alt="Detalle de cocina y presentación" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed5.jpg" alt="Mesa y experiencia gastronómica" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="overflow-hidden rounded-2xl shadow-xl h-[420px]">
+                                    <img src="img/gallery/unnamed6.jpg" alt="Espacio acogedor del restaurante" loading="lazy" class="w-full h-[420px] object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="gallery-swiper-prev absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Imagen anterior">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button type="button" class="gallery-swiper-next absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="Siguiente imagen">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                    <div class="gallery-swiper-pagination mt-6 flex justify-center gap-1.5"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="bg-white" data-aos="fade-up">
+            <div class="max-w-6xl mx-auto px-6 py-20">
+                <header class="section-header">
+                    <p class="text-amber-500 uppercase tracking-widest text-sm mb-3">Opiniones de nuestros clientes</p>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4">Lo que dicen nuestros clientes</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Nuestros clientes disfrutan no solo de nuestros platillos, sino también de la experiencia única que ofrecemos.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="card-testimonial" data-aos="fade-up" data-aos-delay="0">
+                        <span class="absolute -top-2 -left-1 text-6xl text-amber-200 leading-none select-none" aria-hidden="true">"</span>
+                        <div class="flex gap-1 text-amber-400 text-lg mb-4" aria-hidden="true">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="text-gray-700 italic mb-6 relative z-0 pl-2">"Un lugar increíble. La comida es deliciosa y el ambiente es perfecto para una cena especial."</blockquote>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-amber-100 relative flex items-center justify-center">
+                                <img src="img/avatar/avatar1.jpg" alt="Carlos Ramírez" loading="lazy" class="absolute inset-0 z-10 w-full h-full object-cover" onerror="this.classList.add('hidden')">
+                                <span class="text-amber-700 font-semibold text-lg relative z-0">C</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Carlos Ramírez</p>
+                                <p class="text-sm text-gray-500">Cliente frecuente</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card-testimonial" data-aos="fade-up" data-aos-delay="100">
+                        <span class="absolute -top-2 -left-1 text-6xl text-amber-200 leading-none select-none" aria-hidden="true">"</span>
+                        <div class="flex gap-1 text-amber-400 text-lg mb-4" aria-hidden="true">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="text-gray-700 italic mb-6 relative z-0 pl-2">"Excelente servicio y platillos espectaculares. Definitivamente volveré."</blockquote>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-amber-100 relative flex items-center justify-center">
+                                <img src="img/avatar/avatar2.jpg" alt="Ana López" loading="lazy" class="absolute inset-0 z-10 w-full h-full object-cover" onerror="this.classList.add('hidden')">
+                                <span class="text-amber-700 font-semibold text-lg relative z-0">A</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Ana López</p>
+                                <p class="text-sm text-gray-500">Cliente frecuente</p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card-testimonial" data-aos="fade-up" data-aos-delay="200">
+                        <span class="absolute -top-2 -left-1 text-6xl text-amber-200 leading-none select-none" aria-hidden="true">"</span>
+                        <div class="flex gap-1 text-amber-400 text-lg mb-4" aria-hidden="true">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="text-gray-700 italic mb-6 relative z-0 pl-2">"Uno de los mejores restaurantes que he visitado. La atención y la calidad de la comida son impresionantes."</blockquote>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-amber-100 relative flex items-center justify-center">
+                                <img src="img/avatar/avatar3.jpg" alt="Miguel Torres" loading="lazy" class="absolute inset-0 z-10 w-full h-full object-cover" onerror="this.classList.add('hidden')">
+                                <span class="text-amber-700 font-semibold text-lg relative z-0">M</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Miguel Torres</p>
+                                <p class="text-sm text-gray-500">Cliente frecuente</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Reservas -->
+        <section id="reservas" class="bg-stone-900 text-white py-24" data-aos="fade-up">
+            <div class="max-w-4xl mx-auto text-center px-6">
+                <p class="text-amber-400 uppercase tracking-widest text-sm mb-4">Reserva tu mesa</p>
+                <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">Vive una experiencia gastronómica inolvidable</h2>
+                <p class="text-gray-200 max-w-2xl mx-auto mb-10">Disfruta de nuestros platillos exclusivos en un ambiente único. Reserva ahora y asegura tu lugar.</p>
+                <a href="https://wa.me/525567574525?text=Hola%2C%20me%20gustar%C3%ADa%20reservar%20una%20mesa%20en%20su%20restaurante." target="_blank" rel="noopener noreferrer" class="inline-block bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-stone-900 focus-visible:ring-2">Reservar ahora</a>
+            </div>
+        </section>
+
+        <!-- Contacto y Ubicación -->
+        <section id="contacto" class="py-24 bg-stone-50">
+            <div class="max-w-6xl mx-auto px-6">
+                <header class="section-header">
+                    <p class="text-amber-600 font-semibold uppercase tracking-widest text-sm mb-4">Contáctanos</p>
+                    <h2 class="font-display text-4xl font-bold text-gray-900 text-center mb-16">Visítanos o haz tu reserva</h2>
+                </header>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                    <div class="contact-card p-8 space-y-6" data-aos="fade-right">
+                        <div class="flex items-start gap-4">
+                            <span class="shrink-0 w-6 h-6 text-amber-600" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </span>
+                            <div>
+                                <p class="font-bold text-gray-900 mb-1">Dirección</p>
+                                <p class="text-gray-700">INFONAVIT Nte<br>54720 Cuautitlán Izcalli, Méx.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="shrink-0 w-6 h-6 text-amber-600" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            </span>
+                            <div>
+                                <p class="font-bold text-gray-900 mb-1">Teléfono</p>
+                                <p class="text-gray-700"><a href="tel:+5255567574525" class="hover:text-amber-600 transition-colors">+52 55 6757 4525</a></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="shrink-0 w-6 h-6 text-amber-600" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </span>
+                            <div>
+                                <p class="font-bold text-gray-900 mb-1">Horario</p>
+                                <p class="text-gray-700">Lunes - Domingo<br>12:00 pm - 11:00 pm</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="shrink-0 w-6 h-6 text-amber-600" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </span>
+                            <div>
+                                <p class="font-bold text-gray-900 mb-1">Email</p>
+                                <p class="text-gray-700"><a href="mailto:reservas@restaurante.com" class="hover:text-amber-600 transition-colors">reservas@restaurante.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full min-h-[320px] lg:min-h-[420px]" data-aos="fade-left">
+                        <iframe src="https://maps.google.com/maps?q=INFONAVIT%20Nte%2054720%20Cuautitlán%20Izcalli%20México&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del restaurante" class="w-full h-[420px] rounded-2xl shadow-xl border border-gray-200"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Galería -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-[100] flex hidden items-center justify-center p-4 bg-black/90" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ver imagen ampliada">
+        <button type="button" id="lightbox-close" class="absolute top-4 right-4 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/20 text-white hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-black/50 transition" aria-label="Cerrar">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div id="lightbox-backdrop" class="absolute inset-0" tabindex="-1"></div>
+        <img id="lightbox-image" src="" alt="" class="relative z-10 max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl">
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+                <!-- Columna 1: Restaurante -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <img src="img/logo/logo.png" alt="Logo Demo Restaurante" loading="lazy" class="h-10 w-auto object-contain">
+                        <span class="font-display text-xl font-semibold text-white">Demo Restaurante</span>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Cocina artesanal, ingredientes frescos y un ambiente diseñado para disfrutar momentos inolvidables con familia y amigos.
+                    </p>
+                </div>
+
+                <!-- Columna 2: Links rápidos -->
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-sm tracking-widest uppercase">Links rápidos</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#inicio" class="hover:text-amber-400 transition-colors">Inicio</a></li>
+                        <li><a href="#menu" class="hover:text-amber-400 transition-colors">Menú</a></li>
+                        <li><a href="#gallery" class="hover:text-amber-400 transition-colors">Galería</a></li>
+                        <li><a href="#testimonials" class="hover:text-amber-400 transition-colors">Testimonios</a></li>
+                        <li><a href="#contacto" class="hover:text-amber-400 transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Horarios -->
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-sm tracking-widest uppercase">Horarios</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Lunes – Viernes<br>
+                        <span class="text-gray-100">12:00 pm – 10:00 pm</span>
+                    </p>
+                    <p class="text-sm text-gray-300 leading-relaxed mt-3">
+                        Sábado – Domingo<br>
+                        <span class="text-gray-100">1:00 pm – 11:00 pm</span>
+                    </p>
+                </div>
+
+                <!-- Columna 4: Contacto -->
+                <div>
+                    <h3 class="font-semibold text-white mb-4 text-sm tracking-widest uppercase">Contacto</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        INFONAVIT Nte<br>
+                        54720 Cuautitlán Izcalli, Méx.
+                    </p>
+                    <p class="text-sm text-gray-300 mt-3">
+                        Tel: <a href="tel:+525567574525" class="hover:text-amber-400 transition-colors">+52 55 6757 4525</a>
+                    </p>
+                    <p class="text-sm text-gray-300 mt-1">
+                        Email: <a href="mailto:reservas@restaurante.com" class="hover:text-amber-400 transition-colors">reservas@restaurante.com</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs sm:text-sm text-gray-300">© Restaurant Demo. Proyecto de demostración.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" aria-label="Instagram del restaurante" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-100 hover:bg-amber-500 hover:text-black transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" aria-label="Facebook del restaurante" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-100 hover:bg-amber-500 hover:text-black transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12.07C22 6.49 17.52 2 11.93 2 6.35 2 1.86 6.49 1.86 12.07c0 4.77 3.44 8.73 7.94 9.6v-6.79H7.34v-2.81h2.46v-2.15c0-2.43 1.45-3.77 3.67-3.77 1.06 0 2.17.19 2.17.19v2.39h-1.22c-1.2 0-1.57.75-1.57 1.52v1.82h2.67l-.43 2.81h-2.24v6.79c4.5-.87 7.94-4.83 7.94-9.6z"/></svg>
+                    </a>
+                    <a href="https://wa.me/525567574525?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20reserva." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp del restaurante" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-100 hover:bg-amber-500 hover:text-black transition-colors">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón flotante WhatsApp -->
+    <a href="https://wa.me/525567574525?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20reserva." target="_blank" rel="noopener noreferrer" aria-label="Reservar por WhatsApp" class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

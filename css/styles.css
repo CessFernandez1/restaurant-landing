@@ -1,0 +1,379 @@
+/**
+ * Restaurant Demo - Estilos personalizados
+ * Complementan las clases de TailwindCSS
+ * Paleta unificada: amber (primary) en toda la página
+ */
+
+/* ===== Tipografía display (premium restaurante) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* ===== Variables: paleta unificada amber ===== */
+:root {
+    /* Primario: botones, CTAs, precios, acentos */
+    --color-primary: #d97706;        /* amber-600 */
+    --color-primary-hover: #b45309;  /* amber-700 */
+    --color-primary-light: #fbbf24;  /* amber-400: hovers nav, focus rings */
+    /* Subtítulos y etiquetas */
+    --color-accent: #b45309;         /* amber-700 para subtítulos uppercase */
+    /* Fondos suaves (avatares, estrellas) */
+    --color-soft: #fef3c7;           /* amber-100 */
+    --color-soft-muted: #fde68a;     /* amber-200 */
+    /* Hero y navbar */
+    --hero-overlay: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+    --navbar-height: 5rem;
+}
+
+/* Títulos con tipografía display (restaurante premium) */
+.font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Evitar scroll horizontal en móvil */
+html, body {
+    overflow-x: hidden;
+}
+
+/* ===== Hero Section ===== */
+/* El hero se extiende detrás del navbar para que backdrop-filter desenfoque la imagen del hero, no el body */
+.hero-section {
+    background-image: url('../img/hero/hero1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Fallback cuando no exista img/hero/hero1.jpg */
+    background-color: #1f2937;
+    margin-top: calc(-1 * var(--navbar-height));
+    padding-top: calc(var(--navbar-height) + 1rem); /* contenido del hero por debajo del navbar */
+    animation: heroBackgroundZoom 22s ease-out forwards;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+    pointer-events: none;
+}
+
+.hero-content {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@keyframes heroBackgroundZoom {
+    0% {
+        background-size: 100%;
+    }
+    100% {
+        background-size: 105%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-section {
+        animation: none;
+    }
+}
+
+/* ===== Scroll progress bar ===== */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(to right, var(--color-primary-light), var(--color-primary));
+    z-index: 9999;
+    transform-origin: left center;
+    transition: width 0.15s ease-out, opacity 0.3s ease;
+    opacity: 0;
+}
+
+/* ===== Botones CTA (usan variables de paleta) ===== */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.25), 0 4px 6px -4px rgba(15, 23, 42, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-0.125rem);
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.35), 0 10px 10px -5px rgba(15, 23, 42, 0.25);
+}
+
+.btn-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-primary);
+}
+
+.btn-whatsapp {
+    background-color: #25d366;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(15, 118, 110, 0.25), 0 4px 6px -4px rgba(15, 118, 110, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #20bd5a;
+    transform: translateY(-0.125rem);
+    box-shadow: 0 20px 25px -5px rgba(5, 46, 22, 0.45), 0 10px 10px -5px rgba(5, 46, 22, 0.3);
+}
+
+.btn-whatsapp:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #25d366;
+}
+
+/* ===== Navbar glass: transparente, blur solo sobre la imagen del hero ===== */
+/* Sin fondo sólido: solo blur sobre el hero (el hero se extiende detrás con margin-top negativo). */
+#navbar {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    -webkit-backdrop-filter: saturate(170%) blur(18px);
+    backdrop-filter: saturate(170%) blur(18px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+    min-height: 5rem;
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        min-height 0.3s ease,
+        -webkit-backdrop-filter 0.3s ease,
+        backdrop-filter 0.3s ease;
+}
+
+/* Estado al hacer scroll: mismo glass, un poco más de profundidad y definición */
+#navbar.navbar-scrolled {
+    background-color: rgba(0, 0, 0, 0.18) !important;
+    -webkit-backdrop-filter: saturate(190%) blur(24px);
+    backdrop-filter: saturate(190%) blur(24px);
+    min-height: 4rem;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.6);
+}
+
+/* Legibilidad: sombra sutil en enlaces del nav sobre fondos claros al hacer scroll */
+.nav-link-dark {
+    position: relative;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link-dark::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary-light);
+    transition: width 0.25s ease;
+}
+
+.nav-link-dark:hover::after {
+    width: 100%;
+}
+
+/* ===== Menú móvil: glass premium, animaciones apertura/cierre y enlaces escalonados ===== */
+
+/* Panel: efecto glass oscuro, sombra, transición suave (opacity + scale + translateY) */
+.mobile-menu-dark {
+    transform-origin: top center;
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    transform: scale(0.97) translateY(-8px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, pointer-events 0s linear 0.3s;
+}
+
+.mobile-menu-dark.mobile-menu-open {
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+    pointer-events: auto !important;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* Enlaces: estado inicial para animación escalonada (fade + slide) */
+.mobile-menu-dark .mobile-nav-link,
+.mobile-menu-dark .mobile-nav-cta {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out, color 0.2s ease, background-color 0.2s ease;
+}
+
+.mobile-menu-dark.mobile-menu-open .mobile-nav-link,
+.mobile-menu-dark.mobile-menu-open .mobile-nav-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Retrasos escalonados al abrir (solo cuando el menú está abierto) */
+.mobile-menu-dark.mobile-menu-open ul li:nth-child(1) .mobile-nav-link { transition-delay: 0.05s; }
+.mobile-menu-dark.mobile-menu-open ul li:nth-child(2) .mobile-nav-link { transition-delay: 0.1s; }
+.mobile-menu-dark.mobile-menu-open ul li:nth-child(3) .mobile-nav-link { transition-delay: 0.15s; }
+.mobile-menu-dark.mobile-menu-open ul li:nth-child(4) .mobile-nav-link { transition-delay: 0.2s; }
+.mobile-menu-dark.mobile-menu-open ul li:nth-child(5) .mobile-nav-link { transition-delay: 0.25s; }
+.mobile-menu-dark.mobile-menu-open .mobile-nav-cta { transition-delay: 0.32s; }
+
+/* Estilo base de enlaces (color, padding, focus) */
+.mobile-nav-link {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus {
+    color: var(--color-primary-light);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+/* ===== About Section ===== */
+#about img {
+    background-color: #e7e5e4; /* fallback si la imagen no carga */
+}
+
+/* ===== Menu cards ===== */
+/* Estilo base reutilizable para las cards de menú (visual se mantiene). */
+.card-menu {
+    background-color: #ffffff;
+    border-radius: 1rem; /* rounded-2xl */
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px 0 rgba(15, 23, 42, 0.06); /* shadow-md */
+    border: 1px solid #f3f4f6; /* border-gray-100 */
+    transform: translateY(0);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.card-menu:hover {
+    transform: translateY(-0.4rem);
+    box-shadow: 0 25px 35px -10px rgba(15, 23, 42, 0.45), 0 10px 15px -5px rgba(15, 23, 42, 0.25); /* hover:shadow-xl más profunda */
+}
+
+/* Estado base para animación de entrada de items del menú */
+.menu-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.menu-item.menu-item-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-item.menu-item-hidden {
+    display: none !important;
+}
+
+/* Tabs del menú */
+.menu-tab {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #e5e7eb;
+    background-color: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.menu-tab:hover {
+    background-color: rgba(15, 23, 42, 1);
+    border-color: rgba(251, 191, 36, 0.8);
+    transform: translateY(-1px);
+}
+
+.menu-tab-active {
+    background: linear-gradient(to right, var(--color-primary-light), var(--color-primary));
+    color: #111827;
+    border-color: transparent;
+}
+
+.menu-card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ===== Testimonial cards ===== */
+.card-testimonial {
+    background-color: #f5f5f4; /* bg-stone-50 */
+    border-radius: 1rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px 0 rgba(15, 23, 42, 0.06);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.card-testimonial:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 16px 24px -8px rgba(15, 23, 42, 0.18), 0 8px 10px -6px rgba(15, 23, 42, 0.12);
+}
+
+/* ===== Contact card ===== */
+.contact-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 10px 10px -5px rgba(15, 23, 42, 0.06);
+}
+
+/* ===== Section headers reutilizables ===== */
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem; /* mb-16 */
+}
+
+/* ===== Gallery Swiper Coverflow ===== */
+.gallery-coverflow .gallery-swiper-pagination .swiper-pagination-bullet {
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #9ca3af;
+    opacity: 1;
+    transition: background-color 0.2s;
+}
+
+.gallery-coverflow .gallery-swiper-pagination .swiper-pagination-bullet:hover {
+    background-color: #6b7280;
+}
+
+.gallery-coverflow .gallery-swiper-pagination .swiper-pagination-bullet-active {
+    background-color: var(--color-primary);
+}
+
+.gallery-coverflow .gallery-swiper-pagination .swiper-pagination-bullet + .swiper-pagination-bullet {
+    margin-left: 0.375rem;
+}
+
+/* Imágenes de la galería: microinteracción de zoom suave */
+.gallery-coverflow .swiper-slide img {
+    transition: transform 0.35s ease;
+    cursor: zoom-in;
+}
+
+.gallery-coverflow .swiper-slide img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Footer ===== */
+#footer {
+    border-top: 1px solid rgba(15, 23, 42, 0.6);
+}
+
+#footer p {
+    color: #e5e7eb; /* text-gray-200 para mejor contraste */
+}
+
+/* ===== Utilidades ===== */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 100vh;
+    }
+}
